@@ -1,24 +1,63 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#43883f">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <title>Питание</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { overflow: hidden; background: #43883f; }
     iframe {
-      width: 100vw;
-      height: calc(100vh + 16px);
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
       border: none;
-      margin-top: -16px;
     }
+    .fallback {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: #43883f;
+      color: #fff;
+      font-family: system-ui, sans-serif;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+    }
+    .fallback h1 { font-size: 1.5rem; margin-bottom: 1rem; }
+    .fallback a { color: #c8e6c9; }
   </style>
 </head>
 <body>
-  <iframe src="https://script.google.com/macros/s/AKfycbyYSXxe6DmBW9U0F7Hw7tzvKSRG3_yGPbLiKgg_nMLsMY11p_8ddrOXC6g1EQpg7XSY/exec"></iframe>
+  <iframe
+    src="https://script.google.com/macros/s/AKfycbyYSXxe6DmBW9U0F7Hw7tzvKSRG3_yGPbLiKgg_nMLsMY11p_8ddrOXC6g1EQpg7XSY/exec"
+    sandbox="allow-scripts allow-same-origin allow-forms allow-popups"
+  ></iframe>
+  <div class="fallback" id="fallback">
+    <div>
+      <h1>Не удалось загрузить приложение</h1>
+      <p>Проверьте подключение к интернету и <a href="" onclick="location.reload()">попробуйте снова</a>.</p>
+    </div>
+  </div>
+  <script>
+    var iframe = document.querySelector('iframe');
+    var timer = setTimeout(function() {
+      document.getElementById('fallback').style.display = 'flex';
+    }, 15000);
+    iframe.addEventListener('load', function() { clearTimeout(timer); });
+
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js');
+    }
+  </script>
 </body>
 </html>

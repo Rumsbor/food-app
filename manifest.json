@@ -1,0 +1,15 @@
+{
+  "name": "Питание",
+  "short_name": "Питание",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#43883f",
+  "theme_color": "#43883f",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
